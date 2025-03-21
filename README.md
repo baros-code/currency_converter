@@ -1,3 +1,3 @@
-# currency_converter
+# Currency Converter
 
-A new Flutter project.
+An app that you can make currency conversions out of hundreds of currencies and monitor historical currencies data through years.
