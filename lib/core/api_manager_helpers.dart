@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:currency_converter/stack/failure.dart';
-import 'package:currency_converter/stack/result.dart';
+import 'package:currency_converter/core/failure.dart';
+import 'package:currency_converter/core/result.dart';
 import 'package:dio/dio.dart';
 
 enum ApiContentType { json, text }

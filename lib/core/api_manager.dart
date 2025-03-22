@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:currency_converter/stack/api_manager_helpers.dart';
-import 'package:currency_converter/stack/logger.dart';
+import 'package:currency_converter/core/api_manager_helpers.dart';
+import 'package:currency_converter/core/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
