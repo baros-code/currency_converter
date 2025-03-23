@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:currency_converter/core/failure.dart';
 import 'package:currency_converter/core/result.dart';
 import 'package:dio/dio.dart';
 

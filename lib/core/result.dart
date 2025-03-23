@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-import 'failure.dart';
-
 class Result<TValue extends Object, TError extends Failure> extends Equatable {
   /// Prefer [Result.success] or [Result.failure] instead of this constructor.
 
@@ -35,4 +33,16 @@ class Result<TValue extends Object, TError extends Failure> extends Equatable {
 
   @override
   List<Object?> get props => [isSuccessful, value, error];
+}
+
+class Failure extends Equatable {
+  const Failure({required this.message});
+
+  /// Message to describe the failure.
+  final String message;
+
+  @override
+  List<Object?> get props => [
+        message,
+      ];
 }

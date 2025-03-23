@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:currency_converter/core/api_manager_helpers.dart';
+import 'package:currency_converter/core/network/api_manager_helpers.dart';
 import 'package:currency_converter/core/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http2_adapter/dio_http2_adapter.dart';

@@ -1,10 +1,9 @@
-import 'package:currency_converter/app/constants.dart';
+import 'package:currency_converter/app/app_config.dart';
 import 'package:currency_converter/app/data/models/currency_rates_response.dart';
-import 'package:currency_converter/core/api_manager_helpers.dart';
-import 'package:currency_converter/core/failure.dart';
+import 'package:currency_converter/core/network/api_manager_helpers.dart';
 import 'package:currency_converter/core/result.dart';
 
-import '../../../core/api_manager.dart';
+import '../../../core/network/api_manager.dart';
 
 class CurrencyRepository {
   CurrencyRepository(this._apiManager);

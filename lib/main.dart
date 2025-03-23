@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:currency_converter/app/app_config.dart';
 import 'package:currency_converter/app/presentation/cubit/currency_cubit.dart';
 import 'package:currency_converter/app/presentation/currency_converter_page.dart';
 import 'package:currency_converter/app/utils/app_router.dart';
 import 'package:currency_converter/app/utils/locator.dart';
+import 'package:currency_converter/core/network/api_manager.dart';
 import 'package:currency_converter/core/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,6 +53,7 @@ class MainApp extends StatelessWidget {
 void _initializeDependencies() {
   WidgetsFlutterBinding.ensureInitialized();
   Locator.initialize();
+  locator<ApiManager>().setup(AppConfig.apiSetupParams);
 }
 
 void _onFlutterError(FlutterErrorDetails details) {
@@ -68,7 +71,7 @@ void _onDartError(Object error, StackTrace stackTrace) {
 
 List<BlocProvider> _buildCubitProviders() {
   return <BlocProvider>[
-    BlocProvider(
+    BlocProvider<CurrencyCubit>(
       create: (context) => locator<CurrencyCubit>(),
     ),
   ];
