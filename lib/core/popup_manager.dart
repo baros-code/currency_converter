@@ -3,6 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:sliding_sheet2/sliding_sheet2.dart';
 
 class PopupManager {
+  Future<DateTime?> showDatePickerPopup(
+    BuildContext context, {
+    DateTime? initialDate,
+    DateTime? firstDate,
+    DateTime? lastDate,
+  }) async {
+    return showDatePicker(
+      context: context,
+      initialDate: initialDate ?? DateTime.now(),
+      firstDate: firstDate ?? DateTime(1950),
+      lastDate: lastDate ?? DateTime(2100),
+    );
+  }
+
   Future<void> showSlidingBottomPopup(
     BuildContext context,
     Widget content, {

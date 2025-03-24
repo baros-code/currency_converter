@@ -1,14 +1,12 @@
 import 'dart:async';
 
-import 'package:currency_converter/app/app_config.dart';
-import 'package:currency_converter/app/presentation/cubit/currency_cubit.dart';
-import 'package:currency_converter/app/presentation/currency_converter_page.dart';
-import 'package:currency_converter/app/utils/app_router.dart';
-import 'package:currency_converter/app/utils/locator.dart';
-import 'package:currency_converter/core/network/api_manager.dart';
-import 'package:currency_converter/core/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'app/app_config.dart';
+import 'app/utils/app_router.dart';
+import 'app/utils/locator.dart';
+import 'core/logger.dart';
+import 'core/network/api_manager.dart';
 
 void main() {
   runZonedGuarded(
@@ -30,14 +28,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: _buildCubitProviders(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: AppRouter.generateRoute,
-        home: CurrencyConverterPage(),
-        builder: _buildApp,
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: AppRouter.generateRoute,
+      initialRoute: AppRouter.initialRoute,
+      builder: _buildApp,
     );
   }
 
@@ -67,12 +62,4 @@ void _onDartError(Object error, StackTrace stackTrace) {
   locator<Logger>().error(
     '${error.toString()}\n${stackTrace.toString()}',
   );
-}
-
-List<BlocProvider> _buildCubitProviders() {
-  return <BlocProvider>[
-    BlocProvider<CurrencyCubit>(
-      create: (context) => locator<CurrencyCubit>(),
-    ),
-  ];
 }

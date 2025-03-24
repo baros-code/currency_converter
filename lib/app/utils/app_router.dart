@@ -1,3 +1,7 @@
+import 'package:currency_converter/app/presentation/cubit/currency_cubit.dart';
+import 'package:currency_converter/app/utils/locator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../presentation/currency_converter_page.dart';
 import '../presentation/historical_rates_page.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +16,17 @@ abstract class AppRouter {
     switch (settings.name) {
       case currencyConverter:
         return MaterialPageRoute(
-          builder: (_) => CurrencyConverterPage(),
+          builder: (_) => BlocProvider<CurrencyCubit>(
+            create: (context) => locator<CurrencyCubit>(),
+            child: CurrencyConverterPage(),
+          ),
         );
       case historicalRatesPage:
         return MaterialPageRoute(
-          builder: (_) => HistoricalRatesPage(),
+          builder: (_) => BlocProvider<CurrencyCubit>(
+            create: (context) => locator<CurrencyCubit>(),
+            child: HistoricalRatesPage(),
+          ),
         );
       default:
         return MaterialPageRoute(

@@ -13,27 +13,33 @@ class CurrencyCubit extends Cubit<CurrencyState> {
 
   List<String> get currencies => state.currencyRates.keys.toList();
 
-  Future<void> fetchCurrencies({String? base}) async {
+  Future<void> fetchCurrencies(
+      {String? base, bool isHistoricFetch = false}) async {
     emit(state.copyWith(stateType: CurrencyStateType.loading));
     final result = await _currencyRepository.getCurrencyRates(
       baseCurrency: base ?? state.baseCurrency,
+      date: isHistoricFetch ? state.selectedPeriod : null,
     );
     if (result.isSuccessful) {
       emit(state.copyWith(
         stateType: CurrencyStateType.loaded,
         baseCurrency: result.value!.base,
+        selectedPeriod: isHistoricFetch ? result.value!.date : null,
+        isHistoricFetch: isHistoricFetch,
         currencyRates: {
           // Include the base currency to show in the list.
           result.value!.base!: 1,
           ...?result.value!.rates,
         },
       ));
+      // We first should update currencyRates mapping then convert the amount.
+      emit(state.copyWith(convertedAmount: _convertAmount(state.amount)));
       return;
     }
     emit(state.copyWith(stateType: CurrencyStateType.error));
   }
 
-  void onSwapInputChanged(String amount) {
+  void onAmountChanged(String amount) {
     if (amount.isEmpty) {
       emit(state.copyWith(amount: 0, convertedAmount: 0));
       return;
@@ -64,6 +70,10 @@ class CurrencyCubit extends Cubit<CurrencyState> {
     );
     await fetchCurrencies(base: targetCurrency);
     emit(state.copyWith(convertedAmount: _convertAmount(state.amount)));
+  }
+
+  void onDateSelected(DateTime date) {
+    emit(state.copyWith(selectedPeriod: date));
   }
 
   double _convertAmount(double? amount) {

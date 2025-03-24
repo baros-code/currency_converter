@@ -1,5 +1,6 @@
 import 'package:currency_converter/app/app_config.dart';
 import 'package:currency_converter/app/data/models/currency_rates_response.dart';
+import 'package:currency_converter/app/utils/date_time_ext.dart';
 import 'package:currency_converter/core/network/api_manager_helpers.dart';
 import 'package:currency_converter/core/result.dart';
 
@@ -16,11 +17,13 @@ class CurrencyRepository {
 
   Future<Result<CurrencyRatesResponse, Failure>> getCurrencyRates({
     String baseCurrency = AppConfig.baseCurrency,
+    DateTime? date,
     // We can limit the target currencies in order to reduce the response size.
     List<String>? targetCurrencies,
   }) async {
     try {
-      if (_latestRatesCache[baseCurrency] != null) {
+      // We cannot use the cache if we're fetching historical rates.
+      if (_latestRatesCache[baseCurrency] != null && date == null) {
         return Result.success(
           value: CurrencyRatesResponse(
             base: baseCurrency,
@@ -38,13 +41,15 @@ class CurrencyRepository {
         ApiCall(
           method: ApiMethod.get,
           queryParams: queryParams,
-          path: '/latest',
+          path: date == null ? '/latest' : '/${date.formatByYearMonthDay()}',
           responseMapper: (response) =>
               CurrencyRatesResponse.fromJson(response),
         ),
       );
       if (response.isSuccessful) {
-        _latestRatesCache[baseCurrency] = response.value!.rates!;
+        if (date == null) {
+          _latestRatesCache[baseCurrency] = response.value!.rates!;
+        }
         return Result.success(value: response.value!);
       }
       return Result.failure(Failure(message: response.error!.message));

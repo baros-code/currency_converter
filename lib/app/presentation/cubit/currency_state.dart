@@ -8,6 +8,7 @@ class CurrencyState extends Equatable {
     this.amount,
     this.convertedAmount,
     this.selectedPeriod,
+    this.isHistoricFetch = false,
     this.currencyRates = const {},
   });
 
@@ -17,6 +18,7 @@ class CurrencyState extends Equatable {
   final double? amount;
   final double? convertedAmount;
   final DateTime? selectedPeriod;
+  final bool isHistoricFetch;
   final Map<String, double> currencyRates;
 
   bool get isLoading => stateType == CurrencyStateType.loading;
@@ -32,6 +34,7 @@ class CurrencyState extends Equatable {
     double? amount,
     double? convertedAmount,
     DateTime? selectedPeriod,
+    bool? isHistoricFetch,
     Map<String, double>? currencyRates,
   }) {
     return CurrencyState(
@@ -41,6 +44,7 @@ class CurrencyState extends Equatable {
       amount: amount ?? this.amount,
       convertedAmount: convertedAmount ?? this.convertedAmount,
       selectedPeriod: selectedPeriod ?? this.selectedPeriod,
+      isHistoricFetch: isHistoricFetch ?? this.isHistoricFetch,
       currencyRates: currencyRates ?? this.currencyRates,
     );
   }
@@ -53,6 +57,7 @@ class CurrencyState extends Equatable {
         amount,
         convertedAmount,
         selectedPeriod,
+        isHistoricFetch,
         currencyRates,
       ];
 }
