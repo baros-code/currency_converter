@@ -9,20 +9,25 @@ class CurrencyConverterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppConfig.backgroundPrimary,
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
+      child: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Scaffold(
           backgroundColor: AppConfig.backgroundPrimary,
-          title: Text(
-            'Currency Converter',
-            style: TextStyle(color: Colors.white),
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            backgroundColor: AppConfig.backgroundPrimary,
+            title: Text(
+              'Currency Converter',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SwapWidget(),
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SwapWidget(),
+            ),
           ),
         ),
       ),

@@ -41,6 +41,7 @@ class _SwapWidgetState extends State<SwapWidget> {
             children: [
               _BaseField(
                 baseCurrency: state.baseCurrency,
+                error: state.errorMessage,
                 onChanged: _currencyCubit.onSwapInputChanged,
               ),
               const SizedBox(height: 8),
@@ -63,10 +64,12 @@ class _SwapWidgetState extends State<SwapWidget> {
 class _BaseField extends StatelessWidget {
   const _BaseField({
     required this.baseCurrency,
+    this.error,
     required this.onChanged,
   });
 
   final String baseCurrency;
+  final String? error;
   final void Function(String) onChanged;
 
   @override
@@ -74,7 +77,18 @@ class _BaseField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('From'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('From'),
+            if (error != null) ...[
+              Text(
+                error!,
+                style: TextStyle(color: Colors.red),
+              ),
+            ],
+          ],
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

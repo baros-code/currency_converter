@@ -21,6 +21,10 @@ class CurrencyState extends Equatable {
 
   bool get isLoading => stateType == CurrencyStateType.loading;
 
+  String? get errorMessage => stateType == CurrencyStateType.error
+      ? 'The rates could not be fetched.'
+      : null;
+
   CurrencyState copyWith({
     CurrencyStateType? stateType,
     String? baseCurrency,
